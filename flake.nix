@@ -25,7 +25,7 @@
 
       mcpixModule = {
         imports = [ ./module ];
-        extraSpecialArgs = { inherit inputs; };
+        _module.args.mcp-servers-nix = inputs.mcp-servers-nix;
       };
     in
     {
