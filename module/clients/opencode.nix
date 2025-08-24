@@ -13,7 +13,14 @@ in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
     programs.opencode.settings = clib.mkMergedConfig {
-      inherit globalCfg cfg pkgs mcp-servers-nix;
+      inherit
+        globalCfg
+        cfg
+        pkgs
+        mcp-servers-nix
+        ;
+      existingConfig = config.programs.opencode.settings;
     };
   };
 }
+
