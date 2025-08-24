@@ -19,7 +19,6 @@ in
         pkgs
         mcp-servers-nix
         ;
-      existingConfig = config.programs.gemini-cli.settings;
     };
   };
 }
