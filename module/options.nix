@@ -1,6 +1,9 @@
 { lib, ... }:
 let
-  targets = [ "gemini-cli" ];
+  targets = [
+    "gemini-cli"
+    "opencode"
+  ];
   clib = import ../lib { inherit lib; };
 
   targetOptions = lib.genAttrs targets (
@@ -24,7 +27,7 @@ in
       description = "MCP configuration per target";
     };
 
-    globalServers = lib.mkOption {
+    servers = lib.mkOption {
       type = lib.types.attrs;
       default = { };
       description = "Global MCP servers applied to all enabled targets";
