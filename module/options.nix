@@ -2,11 +2,20 @@
 let
   targets = [ "gemini-cli" ];
   clib = import ../lib { inherit lib; };
-  targetOptions = lib.genAttrs targets (targetName: (lib.mkOption clib.types.target));
+
+  targetOptions = lib.genAttrs targets (
+    targetName:
+    lib.mkOption {
+      type = clib.types.target;
+      default = { };
+      description = "MCP config for target ${targetName}";
+    }
+  );
 in
 {
   options.programs.mcpix = {
     enable = lib.mkEnableOption "mcpix";
+
     targets = lib.mkOption {
       type = lib.types.submodule {
         options = targetOptions;
@@ -14,6 +23,7 @@ in
       default = { };
       description = "MCP configuration per target";
     };
+
     globalServers = lib.mkOption {
       type = lib.types.attrs;
       default = { };
