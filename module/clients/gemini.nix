@@ -13,6 +13,6 @@ let
 in
 {
   config = lib.mkIf cfg.enable {
-    programs.gemini.settings = mcpConfig;
+    programs.gemini-cli.settings = mcpConfig;
   };
 }
