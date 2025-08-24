@@ -12,7 +12,7 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
-    programs.opencode.settings.mcpServers = clib.mkMergedConfig {
+    programs.opencode.settings = clib.mkMergedConfig {
       inherit
         globalCfg
         cfg

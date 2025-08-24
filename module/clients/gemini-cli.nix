@@ -12,7 +12,7 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
-    programs.gemini-cli.settings.mcpServers = clib.mkMergedConfig {
+    programs.gemini-cli.settings = clib.mkMergedConfig {
       inherit
         globalCfg
         cfg
