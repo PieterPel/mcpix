@@ -9,7 +9,9 @@
     }:
     let
       mergedServers = lib.recursiveUpdate globalCfg.servers (cfg.servers or { });
-      mcpConfig = mcp-servers-nix.lib.mkConfig pkgs mergedServers;
+      # mcpConfig = mcp-servers-nix.lib.mkConfig pkgs mergedServers;
+      mcpConfigDrv = mcp-servers-nix.lib.mkConfig pkgs mergedServers;
+      mcpConfig = builtins.fromJSON (builtins.readFile mcpConfigDrv);
       result = if mergedServers == { } then { servers = { }; } else mcpConfig;
     in
     result;
