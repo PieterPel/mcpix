@@ -25,7 +25,7 @@
 
       mcpixModule = {
         imports = [ ./module ];
-        specialArgs = { inherit inputs; };
+        extraSpecialArgs = { inherit inputs; };
       };
     in
     {
