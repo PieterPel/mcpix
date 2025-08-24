@@ -11,7 +11,7 @@ let
   cfg = config.programs.mcpix.targets.gemini-cli;
 in
 {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable && globalCfg.enable) {
     programs.gemini-cli.settings = clib.mkMergedConfig {
       inherit globalCfg cfg pkgs mcp-servers-nix;
     };
