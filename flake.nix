@@ -26,6 +26,6 @@
     {
       # TODO: also nixos and nix-darwin?
       homeManagerModules.default = import ./module;
-      homeManagerModules.mcp-config-nix = self.homeModules.default;
+      homeManagerModules.mcpix = self.homeModules.default;
     };
 }
