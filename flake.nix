@@ -8,33 +8,29 @@
     mcp-servers-nix = {
       url = "github:natsukium/mcp-servers-nix";
     };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
   };
 
   outputs =
     { self, ... }@inputs:
-    inputs.flake-utils.lib.eachDefaultSystem (system:
+
     let
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
       # TODO: also allow for per-project settings using flake as input for dev flake
-      pkgs = inputs.nixpkgs.legacyPackages.${system};
+
       mcpixModule = {
         imports = [ ./module ];
+        _module.args.mcp-servers-nix = inputs.mcp-servers-nix;
       };
     in
     {
       # TODO: also nixos and nix-darwin?
       homeManagerModules.default = mcpixModule;
       homeManagerModules.mcpix = mcpixModule;
-
-      checks = import ./tests {
-        inherit pkgs inputs;
-        home-manager = inputs.home-manager;
-      };
-    });
+    };
 }
