@@ -1,7 +1,5 @@
-{
-  lib,
-  ...
-}:
-{
-  types = import ./types.nix { inherit lib; };
+{...}:{
+  imports = [
+    ./types.nix
+  ];
 }

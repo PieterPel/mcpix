@@ -1,9 +1,12 @@
 {
-  description = "Home-manager module to configure MCP servers for all clients";
+  description = "Home-manager module and per-project config to configure MCP servers for all clients";
 
   inputs = {
     nixpkgs = {
       url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    };
+    mcp-servers-nix = {
+      url = "github:natsukium/mcp-servers-nix";
     };
   };
 
@@ -18,10 +21,11 @@
         "aarch64-darwin"
       ];
       forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
+      # TODO: also allow for per-project settings using flake as input for dev flake
     in
     {
       # TODO: also nixos and nix-darwin?
-      homeModules.default = import ./module;
-      homeModules.mcp-config-nix = self.homeModules.default;
+      homeManagerModules.default = import ./module;
+      homeManagerModules.mcp-config-nix = self.homeModules.default;
     };
 }

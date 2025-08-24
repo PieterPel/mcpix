@@ -1,6 +1,7 @@
 {
-...
-}:{
+  ...
+}:
+{
   imports = [
     ./clients
     ./options.nix
