@@ -22,10 +22,15 @@
       ];
       forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
       # TODO: also allow for per-project settings using flake as input for dev flake
+
+      mcpixModule = {
+        imports = [ ./module ];
+        specialArgs = { inherit inputs; };
+      };
     in
     {
       # TODO: also nixos and nix-darwin?
-      homeManagerModules.default = import ./module;
-      homeManagerModules.mcpix = self.homeManagerModules.default;
+      homeManagerModules.default = mcpixModule;
+      homeManagerModules.mcpix = mcpixModule;
     };
 }
