@@ -1,8 +1,8 @@
 { lib, ... }:
 let
-  targets = [ "gemini" ];
+  targets = [ "gemini-cli" ];
   clib = import ../lib { inherit lib; };
-  targetOptions = lib.genAttrs targets (targetName: clib.types.target);
+  targetOptions = lib.genAttrs targets (targetName: lib.mkOption clib.types.target);
 in
 {
   options.programs.mcpix = {

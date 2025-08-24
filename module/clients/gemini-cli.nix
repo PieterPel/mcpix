@@ -7,7 +7,7 @@
 }:
 let
   globalCfg = config.programs.mcpix;
-  cfg = config.programs.mcpix.targets.gemini;
+  cfg = config.programs.mcpix.targets.gemini-cli;
   mergedServers = lib.mkMerge globalCfg.globalServers cfg.servers;
   mcpConfig = inputs.mcp-servers-nix.lib.mkConfig pkgs mergedServers;
 in

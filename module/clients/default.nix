@@ -1,6 +1,6 @@
 { ... }:
 {
   imports = [
-    ./gemini.nix
+    ./gemini-cli.nix
   ];
 }
