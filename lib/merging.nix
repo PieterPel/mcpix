@@ -9,10 +9,20 @@
     }:
     let
       mergedServers = lib.recursiveUpdate globalCfg.servers (cfg.servers or { });
-      # mcpConfig = mcp-servers-nix.lib.mkConfig pkgs mergedServers;
-      mcpConfigDrv = mcp-servers-nix.lib.mkConfig pkgs mergedServers;
-      mcpConfig = builtins.fromJSON (builtins.readFile mcpConfigDrv);
-      result = if mergedServers == { } then { servers = { }; } else mcpConfig;
+      mcpConfig = mcp-servers-nix.lib.mkConfig pkgs mergedServers;
+      # Convert any remaining store path references to strings
+      result =
+        if mergedServers == { } then
+          { servers = { }; }
+        else
+          lib.mapAttrsRecursive (
+            path: value:
+            # Force conversion of store paths to plain strings
+            if builtins.isString value && lib.hasInfix "/nix/store" value then
+              builtins.unsafeDiscardStringContext value
+            else
+              value
+          ) mcpConfig;
     in
     result;
 }
