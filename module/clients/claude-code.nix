@@ -8,11 +8,11 @@
 let
   clib = import ../../lib { inherit lib; };
   globalCfg = config.programs.mcpix;
-  cfg = config.programs.mcpix.targets.opencode;
+  cfg = config.programs.mcpix.targets.claude-code;
 in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
-    programs.opencode.settings = clib.convert.geminiToOpenCode clib.mkMergedConfig {
+    programs.claude-code.settings = clib.convert.geminiToClaudeCode clib.mkMergedConfig {
       inherit
         globalCfg
         cfg

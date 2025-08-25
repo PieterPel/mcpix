@@ -3,6 +3,7 @@ let
   targets = [
     "gemini-cli"
     "opencode"
+    "claude-code"
   ];
   clib = import ../lib { inherit lib; };
 
