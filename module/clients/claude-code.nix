@@ -12,13 +12,15 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
-    programs.claude-code.settings = clib.convert.geminiToClaudeCode clib.mkMergedConfig {
-      inherit
-        globalCfg
-        cfg
-        pkgs
-        mcp-servers-nix
-        ;
-    };
+    programs.claude-code.settings = clib.convert.geminiToClaudeCode (
+      clib.mkMergedConfig {
+        inherit
+          globalCfg
+          cfg
+          pkgs
+          mcp-servers-nix
+          ;
+      }
+    );
   };
 }
