@@ -11,6 +11,7 @@ let
   mainCfg = config.programs.gemini-cli;
 
   defaultContextFile = "GEMINI.md";
+  makeContextFile = globalCfg.rules != "" || cfg.rules != "";
   contextFile =
     if mainCfg.settings ? contextFileName then
       if builtins.isList mainCfg.settings.contextFileName then
@@ -31,8 +32,10 @@ in
         ;
     };
 
-    home.file.".gemini/${contextFile}" = clib.merge.mkMergedRules {
-      inherit globalCfg cfg;
+    home.file.".gemini/${contextFile}" = lib.mkIf (makeContextFile) {
+      text = clib.merge.mkMergedRules {
+        inherit globalCfg cfg;
+      };
     };
   };
 }
