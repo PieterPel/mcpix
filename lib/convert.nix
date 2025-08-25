@@ -18,7 +18,7 @@ let
           }
         else
           {
-            type = "sse";
+            type = "remote";
             url = serverConfig.url;
             # TODO: add header support?
           }
@@ -47,6 +47,7 @@ let
           {
             type = "sse";
             url = serverConfig.url;
+            # TODO: add header support?
           }
           // (if serverConfig ? env then { env = serverConfig.env; } else { });
 
