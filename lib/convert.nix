@@ -18,7 +18,10 @@ let
         // (if serverConfig ? env then { environment = serverConfig.env; } else { });
 
     in
-    builtins.mapAttrs convertServer geminiAttrs;
+    # builtins.mapAttrs convertServer geminiAttrs;
+    {
+      mcp = builtins.mapAttrs convertServer geminiAttrs.mcpServers;
+    };
 
   geminiToClaudeCode =
     geminiAttrs:
@@ -33,7 +36,9 @@ let
         // (if serverConfig ? env then { env = serverConfig.env; } else { });
 
     in
-    builtins.mapAttrs convertServer geminiAttrs;
+    {
+      mcpServers = builtins.mapAttrs convertServer geminiAttrs.mcpServers;
+    };
 in
 {
   inherit geminiToOpenCode geminiToClaudeCode;
