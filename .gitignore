@@ -5,5 +5,8 @@ result-*
 # Ignore automatically generated direnv output
 .direnv
 
-# Other
+# Ignore pre-commit symlink
+.pre-commit-config.yaml
+
+# Ignore backups
 *.backup

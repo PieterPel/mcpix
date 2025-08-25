@@ -1,11 +1,11 @@
 { lib }:
 {
   mkMergedServers =
-    {
-      globalCfg,
-      cfg,
-      pkgs,
-      mcp-servers-nix,
+    { globalCfg
+    , cfg
+    , pkgs
+    , mcp-servers-nix
+    ,
     }:
     let
       mergedServers = lib.recursiveUpdate globalCfg.servers (cfg.servers or { });
@@ -25,14 +25,15 @@
     in
     result;
 
-    # TODO: is this the merge we want?
-    mkMergedRules = {
-      globalCfg,
-      cfg,
+  # TODO: is this the merge we want?
+  mkMergedRules =
+    { globalCfg
+    , cfg
+    ,
     }:
     ''
-    ${globalCfg.rules}
+      ${globalCfg.rules}
 
-    ${cfg.rules}
+      ${cfg.rules}
     '';
 }

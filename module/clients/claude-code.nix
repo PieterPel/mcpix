@@ -1,9 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  mcp-servers-nix,
-  ...
+{ config
+, lib
+, pkgs
+, mcp-servers-nix
+, ...
 }:
 let
   clib = import ../../lib { inherit lib; };
