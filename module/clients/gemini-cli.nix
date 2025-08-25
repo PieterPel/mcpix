@@ -22,7 +22,7 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
-    mainCfg.settings = clib.merge.mkMergedServers {
+    programs.gemini-cli.settings = clib.merge.mkMergedServers {
       inherit
         globalCfg
         cfg
