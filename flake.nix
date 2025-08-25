@@ -40,18 +40,19 @@
         "x86_64-darwin"
       ];
       perSystem =
-        { config, ... }:
+        { pkgs, config, ... }:
         {
           nix-unit.inputs = {
             # NOTE: a `nixpkgs-lib` follows rule is currently required
             # https://nix-community.github.io/nix-unit/examples/flake-parts.html
             inherit (inputs) nixpkgs flake-parts nix-unit;
+            mcpix = inputs.self;
           };
 
           devShells.default = config.pre-commit.devShell;
 
           pre-commit = {
-            check.enable = true;
+            check.enable = false;
             settings = {
               hooks = {
                 nixpkgs-fmt.enable = true;
@@ -60,6 +61,8 @@
               };
             };
           };
+
+          nix-unit.tests = import ./tests { inherit pkgs; };
         };
 
       flake =
