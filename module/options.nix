@@ -12,7 +12,7 @@ let
     lib.mkOption {
       type = clib.types.target;
       default = { };
-      description = "MCP config for target ${targetName}";
+      description = "Configuration for target ${targetName}";
     }
   );
 in
@@ -25,7 +25,13 @@ in
         options = targetOptions;
       };
       default = { };
-      description = "MCP configuration per target";
+      description = "Configuration per target";
+    };
+
+    rules = lib.mkOption {
+      type = lib.types.lines;
+      default = "";
+      description = "Global AI rules applied to all enabled targets";
     };
 
     servers = lib.mkOption {

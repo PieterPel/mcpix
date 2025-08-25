@@ -10,7 +10,13 @@ let
       enable = lib.mkOption {
         type = t.bool;
         default = true;
-        description = "Whether to enable MCP configuration for this target";
+        description = "Whether to enable configuration for this target";
+      };
+
+      rules = lib.mkOption {
+        type = lib.types.lines;
+        default = "";
+        description = "AI rules for this target";
       };
 
       servers = lib.mkOption {

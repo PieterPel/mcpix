@@ -12,14 +12,21 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
-    programs.opencode.settings = clib.convert.geminiToOpenCode (clib.mkMergedConfig {
-        inherit
-          globalCfg
-          cfg
-          pkgs
-          mcp-servers-nix
-          ;
-      }
-    );
+    programs.opencode = {
+      settings = clib.convert.geminiToOpenCode (
+        clib.merge.mkMergedServers {
+          inherit
+            globalCfg
+            cfg
+            pkgs
+            mcp-servers-nix
+            ;
+        }
+      );
+
+      rules = clib.merge.mkMergedRules {
+        inherit globalCfg cfg;
+      };
+    };
   };
 }

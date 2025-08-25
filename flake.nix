@@ -1,5 +1,5 @@
 {
-  description = "Home-manager module and per-project config to configure MCP servers for all clients";
+  description = "Home-manager module to configure MCP servers for all clients";
 
   inputs = {
     nixpkgs = {
@@ -7,6 +7,7 @@
     };
     mcp-servers-nix = {
       url = "github:natsukium/mcp-servers-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

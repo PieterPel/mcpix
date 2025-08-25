@@ -1,6 +1,6 @@
 { lib }:
 {
-  mkMergedConfig =
+  mkMergedServers =
     {
       globalCfg,
       cfg,
@@ -24,4 +24,15 @@
           mcpConfigAttrs;
     in
     result;
+
+    # TODO: is this the merge we want?
+    mkMergedRules = {
+      globalCfg,
+      cfg,
+    }:
+    ''
+    ${globalCfg.rules}
+
+    ${cfg.rules}
+    '';
 }

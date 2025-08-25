@@ -9,11 +9,12 @@ let
   clib = import ../../lib { inherit lib; };
   globalCfg = config.programs.mcpix;
   cfg = config.programs.mcpix.targets.claude-code;
+  contextFile = "CLAUDE.md";
 in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
     programs.claude-code.settings = clib.convert.geminiToClaudeCode (
-      clib.mkMergedConfig {
+      clib.merge.mkMergedServers {
         inherit
           globalCfg
           cfg
@@ -22,5 +23,9 @@ in
           ;
       }
     );
+
+    home.file.".claude/${contextFile}" = clib.merge.mkMergedRules {
+      inherit globalCfg cfg;
+    };
   };
 }
