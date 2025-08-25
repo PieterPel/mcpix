@@ -65,15 +65,17 @@
       flake =
         let
           # TODO: also allow for per-project settings using flake as input for dev flake/flake-part
-          mcpixModule = {
+          homeManagerModule = {
             imports = [ ./modules/home-manager ];
             _module.args.mcp-servers-nix = inputs.mcp-servers-nix;
           };
         in
         {
-          # TODO: also nixos and nix-darwin?
-          homeManagerModules.default = mcpixModule;
-          homeManagerModules.mcpix = mcpixModule;
+          homeManagerModules.default = homeManagerModule;
+          homeManagerModules.mcpix = homeManagerModule;
+
+          flakeModules.default = { };
+          flakeModules.mcpix = { };
         };
     };
 }

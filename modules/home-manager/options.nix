@@ -4,6 +4,7 @@ let
     "gemini-cli"
     "opencode"
     "claude-code"
+    "cursor"
   ];
   clib = import ../lib { inherit lib; };
 
