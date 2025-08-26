@@ -1,6 +1,6 @@
 # mcpix: Nix configuration of Model Context Protocol servers and .md files
 
-Home-manager and flake-part module to universally configure AI integrated editors
+Home-manager and flake-parts module to universally configure AI integrated editors
 (gemini-cli, claude-code, opencode, zed, cursor)
 
 ______________________________________________________________________
