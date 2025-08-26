@@ -92,8 +92,8 @@ Now somewhere in home-manager modules, e.g. `home.nix`:
 ```
 
 NOTE: for more elaborate documentation on the server configugration,
-I refer you to the upstream (mcp-servers-nix)
-[https://github.com/natsukium/mcp-servers-nix] repo.
+I refer you to the upstream
+[mcp-servers-nix](https://github.com/natsukium/mcp-servers-nix) repo.
 You can make custom servers and use pre-defined ones.
 
 - Flake-parts
