@@ -16,6 +16,6 @@ jobs:
             - name: Set up direnv
               uses: HatsuneMiku3939/direnv-action@v1
               with:
-                direnvVersion: 2.32.1
+                direnvVersion: 2.37.1
             - name: Run nix flake check
               run: nix flake check
