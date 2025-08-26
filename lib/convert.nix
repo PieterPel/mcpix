@@ -59,7 +59,19 @@ let
     {
       mcpServers = builtins.mapAttrs convertServer geminiAttrs.mcpServers;
     };
+
+  geminiToZed = geminiAttrs:
+    let
+      convertServer = serverName: serverConfig:
+        serverConfig
+        //
+        { source = "custom"; };
+    in
+    {
+      context_servers = builtins.mapAttrs convertServer geminiAttrs.mcpServers;
+    };
+
 in
 {
-  inherit geminiToOpenCode geminiToClaudeCode;
+  inherit geminiToOpenCode geminiToClaudeCode geminiToZed;
 }

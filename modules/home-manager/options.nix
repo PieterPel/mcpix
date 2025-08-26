@@ -5,6 +5,7 @@ let
     "opencode"
     "claude-code"
     "cursor"
+    "zed"
   ];
   clib = import ../lib { inherit lib; };
 
