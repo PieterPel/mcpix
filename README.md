@@ -1,18 +1,18 @@
 # mcpix: Nix configuration of Model Context Protocol servers and .md files
 
-Home-manager and flake-parts module to universally configure AI integrated editors
-(gemini-cli, claude-code, opencode, zed, cursor)
+Home-manager and flake-parts modules to universally configure AI-integrated editors
 
 ______________________________________________________________________
 
 ## Reasons you might want to use mcpix
 
 - You are part of a developing team that uses different editors,
-  but want to use the same tools
-- You use multiple editors yourself and don't want to duplicate AI configuration
-- You are tired of symlinking your .md files
-- You love nix and want to configure as much as possible with it
-- You are on NixOS and don't want to manually package MCP servers (uses `mcp-servers-nix`)
+  but want to use the same tools.
+- You use multiple editors yourself and don't want to duplicate AI configuration.
+- You are tired of symlinking your .md files.
+- You love nix and want to configure as much as possible with it.
+- You are on NixOS and don't want to manually package MCP servers (uses `mcp-servers-nix`).
+- Supported editors: gemini-cli, claude-code, opencode, zed, cursor.
 
 ## How to use mcpix
 
@@ -110,7 +110,7 @@ you can use the flake-part module for your dev flake.
         };
 
         mcpix = {
-          url = "github:PieterPel/mcpix/trunk";
+          url = "github:PieterPel/mcpix/main";
           inputs.nixpkgs.follows = "nixpkgs";
         };
 
