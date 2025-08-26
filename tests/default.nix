@@ -1,5 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
+let
+  mcpixLib = import ../lib { lib = pkgs.lib; };
+in
 {
-  lib = import ./lib { inherit pkgs; };
+  libTests = import ./lib {
+    lib = mcpixLib;
+    inherit inputs pkgs;
+  };
 }

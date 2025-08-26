@@ -1,11 +1,8 @@
 { lib, ... }:
 
-let
-  inherit (lib.mcpix) convert;
-in
 {
-  "geminiToOpenCode-local" = {
-    expr = convert.geminiToOpenCode {
+  testGeminiToOpenCodeLocal = {
+    expr = lib.convert.geminiToOpenCode {
       mcpServers = {
         testServer = {
           command = "echo";
@@ -17,7 +14,10 @@ in
       mcp = {
         testServer = {
           type = "local";
-          command = [ "echo" "hello" ];
+          command = [
+            "echo"
+            "hello"
+          ];
           enabled = true;
         };
       };

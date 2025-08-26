@@ -23,6 +23,7 @@
 
     git-hooks-nix = {
       url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -45,8 +46,13 @@
           nix-unit.inputs = {
             # NOTE: a `nixpkgs-lib` follows rule is currently required
             # https://nix-community.github.io/nix-unit/examples/flake-parts.html
-            inherit (inputs) nixpkgs flake-parts nix-unit;
-            mcpix = inputs.self;
+            inherit (inputs)
+              nixpkgs
+              flake-parts
+              nix-unit
+              git-hooks-nix
+              mcp-servers-nix
+              ;
           };
 
           devShells.default = config.pre-commit.devShell;
@@ -62,7 +68,7 @@
             };
           };
 
-          nix-unit.tests = import ./tests { inherit pkgs; };
+          nix-unit.tests = import ./tests { inherit pkgs inputs; };
         };
 
       flake =
