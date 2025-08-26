@@ -17,10 +17,9 @@ let
       ;
   };
   finalSettings = lib.recursiveUpdate serverSettings cfg.extraSettings;
-  convertedSettings = clib.convert.geminiToOpenCode finalSettings;
+  convertedSettings = clib.convert.geminiToZed finalSettings;
   settingsFile = pkgs.writeText "zed-settings.json" (builtins.toJSON convertedSettings);
 in
 {
-  config.mcpix.settings.targets.zed.settingsFile =
-    lib.mkIf (cfg.enable) settingsFile;
+  config.mcpix.settings.targets.zed.settingsFile = lib.mkIf (cfg.enable) settingsFile;
 }
