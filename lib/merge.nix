@@ -16,7 +16,7 @@ let
     ,
     }:
     let
-      mergedServers = mkMergedServers globalCfg cfg;
+      mergedServers = mkMergedServers { inherit globalCfg cfg; };
       mcpConfigDrv = mcp-servers-nix.lib.mkConfig pkgs mergedServers;
 
       mergedServerConfig =
