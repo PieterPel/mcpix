@@ -13,7 +13,7 @@ in
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
     programs.opencode = {
       settings = clib.convert.geminiToOpenCode (
-        clib.merge.mkMergedServers {
+        clib.merge.mkMergedServerConfig {
           inherit
             globalCfg
             cfg

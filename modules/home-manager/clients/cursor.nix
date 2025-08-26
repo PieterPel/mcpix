@@ -14,7 +14,7 @@ in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
     home.file = {
-      ".cursor/mcp.json" = clib.merge.mkMergedServers {
+      ".cursor/mcp.json" = clib.merge.mkMergedServerConfig {
         inherit
           globalCfg
           cfg

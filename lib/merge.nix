@@ -1,6 +1,14 @@
 { lib }:
-{
+let
   mkMergedServers =
+    { globalCfg
+    , cfg
+    ,
+    }:
+
+    lib.recursiveUpdate globalCfg.servers (cfg.servers or { });
+
+  mkMergedServerConfig =
     { globalCfg
     , cfg
     , pkgs
@@ -8,10 +16,10 @@
     ,
     }:
     let
-      mergedServers = lib.recursiveUpdate globalCfg.servers (cfg.servers or { });
+      mergedServers = mkMergedServers globalCfg cfg;
       mcpConfigDrv = mcp-servers-nix.lib.mkConfig pkgs mergedServers;
 
-      result =
+      mergedServerConfig =
         if mergedServers == { } then
           { servers = { }; }
         else
@@ -23,7 +31,7 @@
           in
           mcpConfigAttrs;
     in
-    result;
+    mergedServerConfig;
 
   # TODO: is this the merge we want?
   mkMergedRules =
@@ -36,4 +44,7 @@
 
       ${cfg.rules}
     '';
+in
+{
+  inherit mkMergedServers mkMergedServerConfig mkMergedRules;
 }
