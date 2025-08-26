@@ -21,10 +21,11 @@ let
 
       mergedServerConfig =
         if mergedServers == { } then
-          { servers = { }; }
+          { }
         else
           let
-            # Read the JSON and strip ALL store path contexts from the string
+            # Read the JSON and strip store path contexts from the string
+            # NOTE: this is due to a mistake in upstream
             jsonString = builtins.unsafeDiscardStringContext (builtins.readFile mcpConfigDrv);
             # Now parse the context-free JSON
             mcpConfigAttrs = builtins.fromJSON jsonString;

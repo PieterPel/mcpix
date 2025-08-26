@@ -31,9 +31,7 @@ in
         servers = { };
       };
     };
-    expected = {
-      servers = { };
-    };
+    expected = { };
   };
 
   testMkMergedServersOnlyGlobal = {
@@ -48,10 +46,8 @@ in
       };
     };
     expected = {
-      servers = {
-        programs = {
-          fetch.enable = true;
-        };
+      programs = {
+        fetch.enable = true;
       };
     };
   };
