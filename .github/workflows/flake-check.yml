@@ -1,16 +1,21 @@
-name: Flake check
+name: flake-check
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+    push:
+        branches:
+            - main
+    pull_request:
 
 jobs:
-  flake-check:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v26
-      - run: nix flake check
+    flake-check:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup Nix environment
+              uses: cachix/install-nix-action@v26
+            - name: Set up direnv
+              uses: HatsuneMiku3939/direnv-action@v1
+              with:
+                direnvVersion: 2.32.1
+            - name: Run nix flake check
+              run: nix flake check
