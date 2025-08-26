@@ -69,6 +69,10 @@
             };
             targets = {
               gemini-cli.enable = true;
+              zed.enable = true;
+              opencode.enable = true;
+              cursor.enable = true;
+              claude-code.enable = true;
             };
             rules = ''
               You are an expert on nix programming.
@@ -113,7 +117,6 @@
 
       flake =
         let
-          # TODO: also allow for per-project settings using flake as input for dev flake/flake-part
           homeManagerModule = {
             imports = [ ./modules/home-manager ];
             _module.args.mcp-servers-nix = inputs.mcp-servers-nix;

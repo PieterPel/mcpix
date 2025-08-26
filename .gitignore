@@ -10,3 +10,13 @@ result-*
 
 # Ignore backups
 *.backup
+
+# mcpix
+.gemini/settings.json
+.claude/settings.json
+.cursor/mcp.json
+.zed/settings.json
+opencode.json
+AGENT.md
+GEMINI.md
+CLAUDE.md
