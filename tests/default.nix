@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }:
 
 let
-  mcpixLib = import ../lib { lib = pkgs.lib; };
+  mcpixLib = import ../modules/lib { lib = pkgs.lib; };
 in
 {
   libTests = import ./lib {

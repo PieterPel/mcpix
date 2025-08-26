@@ -7,7 +7,7 @@
 let
   clib = import ../../lib { inherit lib; };
   globalCfg = config.mcpix.settings;
-  cfg = config.mcpix.settings.targets.gemini-cli;
+  cfg = config.mcpix.settings.targets.claude-code;
   serverSettings = clib.merge.mkMergedServerConfig {
     inherit
       globalCfg
@@ -17,9 +17,11 @@ let
       ;
   };
   finalSettings = lib.recursiveUpdate serverSettings cfg.extraSettings;
-  settingsFile = pkgs.writeText "gemini-cli-settings.json" (builtins.toJSON finalSettings);
-
+  convertedSettings = clib.convert.geminiToClaudeCode finalSettings;
+  settingsFile = pkgs.writeText "claude-code-settings.json" (builtins.toJSON convertedSettings);
 in
 {
-  config.mcpix.settings.targets.gemini-cli.settingsFile = lib.mkIf (cfg.enable) settingsFile;
+  config.mcpix.settings.targets.claude-code.settingsFile =
+    lib.mkIf (cfg.enable) settingsFile;
 }
+

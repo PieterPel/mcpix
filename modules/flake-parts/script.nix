@@ -4,22 +4,14 @@
 , ...
 }:
 let
-  clib = import ../../lib { inherit lib; };
-
-  # TODO: integrate better with options?
-  settingsLocations = {
-    gemini-cli = ".gemini/settings.json";
-  };
-  rulesLocations = {
-    gemini-cli = "GEMINI.md";
-  };
+  clib = import ../lib { inherit lib; };
 
   makeSymlinks =
     client:
     let
-      settingsLocation = settingsLocations.${client};
+      settingsLocation = config.mcpix.settings.targets.${client}.mcpSettingsLocation;
       settingsDir = builtins.dirOf settingsLocation;
-      rulesLocation = rulesLocations.${client};
+      rulesLocation = config.mcpix.settings.targets.${client}.rulesLocation;
       rulesDir = builtins.dirOf rulesLocation;
       makeRules = config.mcpix.rulesFile != null;
     in
@@ -39,19 +31,22 @@ let
       ''}
     '';
 
-  enabledTargets = lib.filter
-    (
-      client: config.mcpix.settings.targets.${client}.enable
-    )
-    clib.types.targets;
-
-  # installationScript = lib.concatMapStringsSep "\n" makeSymlinks enabledTargets;
-  installationScript = "";
 in
 {
-  config.mcpix = {
-    devShell = pkgs.mkShell {
-      shellHook = installationScript;
+  config.mcpix =
+
+    let
+      enabledTargets = lib.filter
+        (
+          client: config.mcpix.settings.targets.${client}.enable
+        )
+        clib.types.targets;
+
+      installationScript = lib.concatMapStringsSep "\n" makeSymlinks enabledTargets;
+    in
+    {
+      devShell = pkgs.mkShell {
+        shellHook = installationScript;
+      };
     };
-  };
 }

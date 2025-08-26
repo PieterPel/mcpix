@@ -9,7 +9,6 @@
 , ...
 }:
 let
-  clib = import ../../lib { inherit lib; };
   inherit (lib)
     mkOption
     types
@@ -23,6 +22,23 @@ in
       , pkgs
       , ...
       }:
+      let
+        clib = import ../lib { inherit lib; };
+        defaultSettingsLocations = {
+          gemini-cli = ".gemini/settings.json";
+          claude-code = ".claude/settings.json";
+          opencode = "opencode.json";
+          zed = ".zed/settings.json";
+          cursor = ".cursor/mcp.json";
+        };
+        defaultRulesLocations = {
+          gemini-cli = "GEMINI.md";
+          claude-code = "CLAUDE.md";
+          opencode = "AGENT.md";
+          zed = "AGENT.md";
+          cursor = "AGENT.md";
+        };
+      in
       {
         options = {
           mcpix = {
@@ -31,13 +47,15 @@ in
                 options = {
                   rules = clib.types.rules;
                   servers = clib.types.servers;
-                  targets = mkOption {
-                    type = clib.types.flakePartsTargetOptions;
+
+                  targets = lib.mkOption {
+                    type = types.submodule {
+                      options = clib.types.flakePartsTargetOptions;
+                    };
+                    default = { };
                     description = "Configuration per target";
                   };
-
                 };
-
               };
               default = { };
               description = ''
@@ -52,16 +70,24 @@ in
             rulesFile = mkOption {
               type = lib.types.nullOr lib.types.package;
               default = null;
-              readOnly = true;
             };
           };
         };
         imports = [
-          # TODO: this location is a bit strange for this
           ./clients
           ./script.nix
           ./rules.nix
         ];
+
+        # Set defaults
+        config = {
+          mcpix.settings.targets = lib.mapAttrs
+            (name: settingsPath: {
+              mcpSettingsLocation = lib.mkDefault settingsPath;
+              rulesLocation = lib.mkDefault defaultRulesLocations.${name};
+            })
+            defaultSettingsLocations;
+        };
       }
     );
   };

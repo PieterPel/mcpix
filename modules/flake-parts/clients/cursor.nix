@@ -7,7 +7,7 @@
 let
   clib = import ../../lib { inherit lib; };
   globalCfg = config.mcpix.settings;
-  cfg = config.mcpix.settings.targets.gemini-cli;
+  cfg = config.mcpix.settings.targets.cursor;
   serverSettings = clib.merge.mkMergedServerConfig {
     inherit
       globalCfg
@@ -17,9 +17,9 @@ let
       ;
   };
   finalSettings = lib.recursiveUpdate serverSettings cfg.extraSettings;
-  settingsFile = pkgs.writeText "gemini-cli-settings.json" (builtins.toJSON finalSettings);
-
+  settingsFile = pkgs.writeText "cursor-settings.json" (builtins.toJSON finalSettings);
 in
 {
-  config.mcpix.settings.targets.gemini-cli.settingsFile = lib.mkIf (cfg.enable) settingsFile;
+  config.mcpix.settings.targets.cursor.settingsFile =
+    lib.mkIf (cfg.enable) settingsFile;
 }

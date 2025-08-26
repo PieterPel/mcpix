@@ -118,13 +118,15 @@
             imports = [ ./modules/home-manager ];
             _module.args.mcp-servers-nix = inputs.mcp-servers-nix;
           };
+
+          flakeModule = ./modules/flake-parts;
         in
         {
           homeManagerModules.default = homeManagerModule;
           homeManagerModules.mcpix = homeManagerModule;
 
-          flakeModules.default = { };
-          flakeModules.mcpix = { };
+          flakeModules.default = flakeModule;
+          flakeModules.mcpix = flakeModule;
         };
     };
 }

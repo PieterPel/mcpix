@@ -3,5 +3,9 @@
 {
   imports = [
     ./gemini-cli.nix
+    ./opencode.nix
+    ./zed.nix
+    ./cursor.nix
+    ./claude-code.nix
   ];
 }
