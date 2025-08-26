@@ -21,6 +21,7 @@ let
       settingsDir = builtins.dirOf settingsLocation;
       rulesLocation = rulesLocations.${client};
       rulesDir = builtins.dirOf rulesLocation;
+      makeRules = config.mcpix.rulesFile != null;
     in
     ''
       echo "Creating symlink for ${client} settings"
@@ -30,12 +31,12 @@ let
 
       ln -s ${config.mcpix.settings.targets.${client}.settingsFile} ${settingsLocation}
 
-      echo "Creating symlink for ${client} rules"
-      mkdir -p ${rulesDir}
-
-      rm -f ${rulesLocation}
-
-      ln -s ${config.mcpix.settings.rulesFile} ${rulesLocation}
+      ${lib.optionalString makeRules ''
+        echo "Creating symlink for ${client} rules"
+        mkdir -p ${rulesDir}
+        rm -f ${rulesLocation}
+        ln -s ${config.mcpix.rulesFile} ${rulesLocation}
+      ''}
     '';
 
   enabledTargets = lib.filter
@@ -44,7 +45,8 @@ let
     )
     clib.types.targets;
 
-  installationScript = lib.concatMapStringsSep "\n" makeSymlinks enabledTargets;
+  # installationScript = lib.concatMapStringsSep "\n" makeSymlinks enabledTargets;
+  installationScript = "";
 in
 {
   config.mcpix = {
