@@ -2,10 +2,12 @@
 , ...
 }:
 let
+  traceLib = builtins.trace "lib: ${builtins.toJSON (builtins.attrNames lib)}" lib;
+  traceBoolType = builtins.trace "lib.types.bool.deprecationMessage: ${builtins.toJSON (lib.types.bool.deprecationMessage or null)}" lib.types.bool;
   t = lib.types;
 
   rules = lib.mkOption {
-    type = lib.types.lines;
+    type = t.lines;
     default = "";
     description = "AI rules in .md format";
 
@@ -32,6 +34,12 @@ let
     description = "Extra json settings for client";
   };
 
+  settingsFile = lib.mkOption {
+    type = t.nullOr lib.types.package;
+    default = null;
+    readOnly = true;
+  };
+
   homeManagerTargetEnable = lib.mkOption {
     type = t.bool;
     default = true;
@@ -53,7 +61,12 @@ let
   flakePartsTarget = t.submodule {
     options = {
       # NOTE: per-target rules would get very unergonomical since clients share .md files
-      inherit flakePartsTargetEnable servers extraSettings;
+      inherit
+        flakePartsTargetEnable
+        servers
+        extraSettings
+        settingsFile
+        ;
     };
   };
 
@@ -87,5 +100,6 @@ in
     flakePartsTarget
     rules
     servers
+    targets
     ;
 }

@@ -33,6 +33,7 @@
       imports = [
         inputs.nix-unit.modules.flake.default
         inputs.git-hooks-nix.flakeModule
+        ./modules/flake-parts
       ];
       systems = [
         "x86_64-linux"
@@ -41,7 +42,10 @@
         "x86_64-darwin"
       ];
       perSystem =
-        { pkgs, config, ... }:
+        { pkgs
+        , config
+        , ...
+        }:
         {
           nix-unit.inputs = {
             # NOTE: a `nixpkgs-lib` follows rule is currently required
@@ -55,10 +59,30 @@
               ;
           };
 
-          devShells.default = pkgs.mkShell {
+          _module.args.mcp-servers-nix = inputs.mcp-servers-nix;
+
+          mcpix.settings = {
+            servers = {
+              programs = {
+                fetch.enable = true;
+              };
+            };
+            targets = {
+              gemini-cli.enable = true;
+            };
+            rules = ''
+              You are an expert on nix programming.
+            '';
+          };
+
+          devShells.pre-commit = pkgs.mkShell {
             packages = [ pkgs.nix-unit ];
             inputsFrom = [ config.pre-commit.devShell ];
           };
+
+          devShells.mcpix = config.mcpix.devShell;
+
+          devShells.default = config.mcpix.devShell;
 
           pre-commit = {
             check.enable = false;

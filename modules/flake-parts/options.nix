@@ -5,11 +5,11 @@
 */
 
 { lib
-, self
 , flake-parts-lib
 , ...
 }:
 let
+  clib = import ../../lib { inherit lib; };
   inherit (lib)
     mkOption
     types
@@ -23,52 +23,39 @@ in
       , pkgs
       , ...
       }:
-      let
-        cfg = config.mcpix;
-      in
       {
         options = {
           mcpix = {
-            pkgs = mkOption {
-              type = types.uniq (types.lazyAttrsOf (types.raw or types.unspecified));
-              description = ''
-                Nixpkgs to use in the mcpix.
-              '';
-              default = pkgs;
-              defaultText = lib.literalMD "`pkgs` (module argument)";
-            };
+            # pkgs = mkOption {
+            #   # TODO: what to do with this?
+            #   type = types.uniq (types.lazyAttrsOf (types.raw or types.unspecified));
+            #   description = ''
+            #     Nixpkgs to use in the mcpix.
+            #   '';
+            #   default = pkgs;
+            #   defaultText = lib.literalMD "`pkgs` (module argument)";
+            # };
             settings = mkOption {
-              type = types.submoduleWith {
-                modules = [
-                  (
-                    { lib
-                    , ...
-                    }:
-                    let
-                      clib = import ../../lib { inherit lib; };
-                    in
-                    {
-                      options = {
-                        rules = clib.types.rules;
-                        servers = clib.types.servers;
-                        targets = mkOption {
-                          type = clib.types.flakePartsTargetOptions;
-                          description = "Configuration per target";
-                        };
-                      };
-                    }
-                  )
-                ];
+              type = types.submodule {
+                options = {
+                  rules = clib.types.rules;
+                  servers = clib.types.servers;
+                  targets = mkOption {
+                    type = clib.types.flakePartsTargetOptions;
+                    description = "Configuration per target";
+                  };
+                  rulesFile = mkOption {
+                    type = lib.types.nullOr lib.types.package;
+                    default = null;
+                    readOnly = true;
+                  };
+                };
+
               };
               default = { };
               description = ''
                 The mcpix configuration.
               '';
-            };
-            installationScript = mkOption {
-              type = types.str;
-              description = "A bash fragment that sets up mcpix.";
-              readOnly = true;
             };
             devShell = mkOption {
               type = types.package;
@@ -77,14 +64,14 @@ in
             };
           };
         };
-        config = {
-          mcpix.installationScript = ""; # TODO: implement
-          mcpix.settings = { pkgs, ... }: { };
-          mcpix.devShell = pkgs.mkShell {
-            shellHook = cfg.installationScript;
-          };
-        };
+        imports = [
+          # TODO: this location is a bit strange for this
+          ./clients
+          ./script.nix
+          ./rules.nix
+        ];
       }
     );
   };
 }
+

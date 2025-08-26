@@ -2,6 +2,5 @@
 {
   imports = [
     ./options.nix
-    ./clients
   ];
 }
