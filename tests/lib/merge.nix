@@ -1,12 +1,9 @@
-{ inputs
-, lib
-, pkgs
+{ lib
 , ...
 }:
 
 let
   inherit (lib.merge) mkMergedRules mkMergedServers;
-  mcp-servers-nix = inputs.mcp-servers-nix;
 in
 {
   testMkMergedRulesSimple = {
@@ -33,8 +30,6 @@ in
       cfg = {
         servers = { };
       };
-      pkgs = pkgs;
-      mcp-servers-nix = mcp-servers-nix;
     };
     expected = {
       servers = { };
@@ -51,8 +46,6 @@ in
       cfg = {
         servers = { };
       };
-      pkgs = pkgs;
-      mcp-servers-nix = mcp-servers-nix;
     };
     expected = {
       servers = {

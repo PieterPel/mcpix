@@ -12,9 +12,7 @@ in
   testMcpServersNixEmpty = {
     expr = stub (
       mkConfig pkgs {
-        programs = {
-          fetch.enable = true;
-        };
+        programs = { };
       }
     );
     expected = true;

@@ -55,7 +55,10 @@
               ;
           };
 
-          devShells.default = config.pre-commit.devShell;
+          devShells.default = pkgs.mkShell {
+            packages = [ pkgs.nix-unit ];
+            inputsFrom = [ config.pre-commit.devShell ];
+          };
 
           pre-commit = {
             check.enable = false;
@@ -68,7 +71,20 @@
             };
           };
 
-          nix-unit.tests = import ./tests { inherit pkgs inputs; };
+          nix-unit = {
+            tests = import ./tests { inherit pkgs inputs; };
+            # NOTE: for some reason nix-unit is still fetching some stuff
+            allowNetwork = true;
+
+            # NOTE: very hacky workaround to get nix available in testing env
+            package = pkgs.symlinkJoin {
+              name = "nix-unit-with-nix";
+              paths = [
+                inputs.nix-unit.packages.${pkgs.system}.default
+                pkgs.nix
+              ];
+            };
+          };
         };
 
       flake =
