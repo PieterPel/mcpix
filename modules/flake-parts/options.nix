@@ -39,7 +39,26 @@ in
             };
             settings = mkOption {
               type = types.submoduleWith {
-                modules = [ ];
+                modules = [
+                  (
+                    { lib
+                    , ...
+                    }:
+                    let
+                      clib = import ../../lib { inherit lib; };
+                    in
+                    {
+                      options = {
+                        rules = clib.types.rules;
+                        servers = clib.types.servers;
+                        targets = mkOption {
+                          type = clib.types.flakePartsTargetOptions;
+                          description = "Configuration per target";
+                        };
+                      };
+                    }
+                  )
+                ];
               };
               default = { };
               description = ''
@@ -49,8 +68,6 @@ in
             installationScript = mkOption {
               type = types.str;
               description = "A bash fragment that sets up mcpix.";
-              default = cfg.settings.installationScript;
-              defaultText = lib.literalMD "bash statements";
               readOnly = true;
             };
             devShell = mkOption {
@@ -61,9 +78,8 @@ in
           };
         };
         config = {
-          mcpix.settings =
-            { pkgs, ... }:
-            { };
+          mcpix.installationScript = ""; # TODO: implement
+          mcpix.settings = { pkgs, ... }: { };
           mcpix.devShell = pkgs.mkShell {
             shellHook = cfg.installationScript;
           };
