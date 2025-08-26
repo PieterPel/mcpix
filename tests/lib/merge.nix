@@ -7,7 +7,7 @@
 let
   inherit (lib.merge) mkMergedRules mkMergedServers mkMergedServerConfig;
   mcp-servers-nix = inputs.mcp-servers-nix;
-  mcpServerFetch = inputs.mcp-servers-nix.packages.${pkgs.system}.mcp-server-fetch;
+  mcpServerGit = inputs.mcp-servers-nix.packages.${pkgs.system}.mcp-server-git;
 in
 {
   testMkMergedRulesSimple = {
@@ -42,7 +42,7 @@ in
     expr = mkMergedServers {
       globalCfg = {
         servers = {
-          programs.fetch.enable = true;
+          programs.git.enable = true;
         };
       };
       cfg = {
@@ -51,7 +51,7 @@ in
     };
     expected = {
       programs = {
-        fetch.enable = true;
+        git.enable = true;
       };
     };
   };
@@ -63,13 +63,13 @@ in
       };
       cfg = {
         servers = {
-          programs.fetch.enable = true;
+          programs.git.enable = true;
         };
       };
     };
     expected = {
       programs = {
-        fetch.enable = true;
+        git.enable = true;
       };
     };
   };
@@ -78,7 +78,7 @@ in
     expr = mkMergedServerConfig {
       globalCfg = {
         servers = {
-          programs.fetch.enable = true;
+          programs.git.enable = true;
         };
       };
       cfg = {
@@ -93,8 +93,8 @@ in
     };
     expected = {
       mcpServers = {
-        fetch = {
-          command = inputs.nixpkgs.lib.getExe mcpServerFetch;
+        git = {
+          command = inputs.nixpkgs.lib.getExe mcpServerGit;
           args = [ ];
           env = { };
         };

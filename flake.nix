@@ -64,7 +64,7 @@
           mcpix.settings = {
             servers = {
               programs = {
-                fetch.enable = true;
+                git.enable = true;
               };
             };
             targets = {

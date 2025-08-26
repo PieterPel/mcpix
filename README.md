@@ -71,7 +71,7 @@ Now somewhere in home-manager modules, e.g. `home.nix`:
 
             # Configure mcp servers for all your editors
             servers = {
-                programs.fetch.enable = true;
+                programs.git.enable = true;
             };
 
             # And configuration per target 
@@ -139,9 +139,10 @@ you can use the flake-part module for your dev flake.
         }:
         {
           mcpix.settings = {
+            # Here are the global MCP servers
             servers = {
               programs = {
-                fetch.enable = true;
+                git.enable = true;
               };
             };
             targets = {

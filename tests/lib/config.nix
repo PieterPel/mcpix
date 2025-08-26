@@ -24,7 +24,7 @@ in
     expr = stub (
       mkConfig pkgs {
         programs = {
-          fetch.enable = true;
+          git.enable = true;
         };
       }
     );
