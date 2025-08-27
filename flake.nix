@@ -108,7 +108,7 @@
             package = pkgs.symlinkJoin {
               name = "nix-unit-with-nix";
               paths = [
-                inputs.nix-unit.packages.${pkgs.system}.default
+                pkgs.nix-unit
                 pkgs.nix
               ];
             };
