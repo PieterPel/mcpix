@@ -19,5 +19,4 @@ jobs:
                 direnvVersion: 2.37.1
             - name: Run nix flake check
               run: | 
-                export NIX_CONFIG="access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}"
-                nix flake check --verbose --debug
+                nix flake check --verbose --debug --no-update-lock-file
