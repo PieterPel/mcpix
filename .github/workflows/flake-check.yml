@@ -20,4 +20,4 @@ jobs:
             - name: Run nix flake check
               run: | 
                 nix develop
-                nix flake check --verbose --debug --no-update-lock-file
+                nix flake check --no-update-lock-file
