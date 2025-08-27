@@ -17,5 +17,13 @@ jobs:
               uses: HatsuneMiku3939/direnv-action@v1.1.0
               with:
                 direnvVersion: 2.37.1
+            - name: Compare Nix info
+              run: |
+                nix --version
+                nix show-config | head -20
+            - name: Debug failing derivation
+              run: |
+                nix log /nix/store/r0f6i6shi7i2slssmqizj1ildiwdcg25-claude_desktop_config.json.drv || true
+                nix show-derivation /nix/store/r0f6i6shi7i2slssmqizj1uldiwdcg25-claude_desktop_config.json.drv || true
             - name: Run nix flake check
               run: nix flake check --verbose --debug
