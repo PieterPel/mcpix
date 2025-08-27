@@ -18,4 +18,4 @@ jobs:
               with:
                 direnvVersion: 2.37.1
             - name: Run nix flake check
-              run: nix flake check
+              run: nix flake check --verbose --debug
