@@ -1,10 +1,9 @@
-{ inputs
-, pkgs
+{ pkgs
+, mcp-servers-nix
 , ...
 }:
 
 let
-  mcp-servers-nix = inputs.mcp-servers-nix;
   mkConfig = mcp-servers-nix.lib.mkConfig;
   stub = input: input != null; # NOTE: just test if the evaluation goes through
 in

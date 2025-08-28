@@ -1,13 +1,12 @@
 { lib
 , pkgs
-, inputs
+, mcp-servers-nix
 , ...
 }:
 
 let
   inherit (lib.merge) mkMergedRules mkMergedServers mkMergedServerConfig;
-  mcp-servers-nix = inputs.mcp-servers-nix;
-  mcpServerGit = inputs.mcp-servers-nix.packages.${pkgs.system}.mcp-server-git;
+  mcpServerGit = mcp-servers-nix.packages.${pkgs.system}.mcp-server-git;
 in
 {
   testMkMergedRulesSimple = {
@@ -94,7 +93,7 @@ in
     expected = {
       mcpServers = {
         git = {
-          command = inputs.nixpkgs.lib.getExe mcpServerGit;
+          command = pkgs.lib.getExe mcpServerGit;
           args = [ ];
           env = { };
         };

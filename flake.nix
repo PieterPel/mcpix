@@ -100,9 +100,13 @@
           };
 
           nix-unit = {
-            tests = import ./tests { inherit pkgs inputs; };
+            tests = import ./tests {
+              inherit pkgs;
+              mcp-servers-nix = inputs.mcp-servers-nix;
+            };
             # NOTE: for some reason nix-unit is still fetching some stuff
             allowNetwork = true;
+            # package = pkgs.nix-unit;
 
             # NOTE: very hacky workaround to get nix available in testing env
             package = pkgs.symlinkJoin {
