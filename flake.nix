@@ -85,7 +85,6 @@
           };
 
           devShells.mcpix = config.mcpix.devShell;
-
           devShells.default = config.mcpix.devShell;
 
           pre-commit = {
@@ -106,16 +105,8 @@
             };
             # NOTE: for some reason nix-unit is still fetching some stuff
             allowNetwork = true;
-            # package = pkgs.nix-unit;
 
-            # NOTE: very hacky workaround to get nix available in testing env
-            package = pkgs.symlinkJoin {
-              name = "nix-unit-with-nix";
-              paths = [
-                pkgs.nix-unit
-                pkgs.nix
-              ];
-            };
+            package = pkgs.nix-unit;
           };
         };
 
