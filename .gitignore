@@ -4,3 +4,19 @@ result-*
 
 # Ignore automatically generated direnv output
 .direnv
+
+# Ignore pre-commit symlink
+.pre-commit-config.yaml
+
+# Ignore backups
+*.backup
+
+# mcpix
+.gemini/settings.json
+.claude/settings.json
+.cursor/mcp.json
+.zed/settings.json
+opencode.json
+AGENT.md
+GEMINI.md
+CLAUDE.md

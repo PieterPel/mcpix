@@ -1,0 +1,21 @@
+name: Check GitHub Actions Versions
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-versions:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Check GitHub Actions Versions
+      uses: mateuszgorniak/github-actions-versioner@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
