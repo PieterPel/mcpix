@@ -8,6 +8,10 @@ let
 
     lib.recursiveUpdate globalCfg.servers (cfg.servers or { });
 
+  mkConfigNoDrv =
+    mcp-servers-nix: pkgs: config:
+    (mcp-servers-nix.lib.evalModule pkgs config).config.settings.servers;
+
   mkMergedServerConfig =
     { globalCfg
     , cfg
@@ -17,22 +21,12 @@ let
     }:
     let
       mergedServers = mkMergedServers { inherit globalCfg cfg; };
-      mcpConfigDrv = mcp-servers-nix.lib.mkConfig pkgs mergedServers;
-
       mergedServerConfig =
-        if mergedServers == { } then
-          { }
-        else
-          let
-            # Read the JSON and strip store path contexts from the string
-            # NOTE: this is due to a mistake in upstream
-            jsonString = builtins.unsafeDiscardStringContext (builtins.readFile mcpConfigDrv);
-            # Now parse the context-free JSON
-            mcpConfigAttrs = builtins.fromJSON jsonString;
-          in
-          mcpConfigAttrs;
+        if mergedServers == { } then { } else mkConfigNoDrv mcp-servers-nix pkgs mergedServers;
     in
-    mergedServerConfig;
+    {
+      mcpServers = mergedServerConfig;
+    };
 
   # TODO: is this the merge we want?
   mkMergedRules =
@@ -47,5 +41,10 @@ let
     '';
 in
 {
-  inherit mkMergedServers mkMergedServerConfig mkMergedRules;
+  inherit
+    mkMergedServers
+    mkMergedServerConfig
+    mkMergedRules
+    mkConfigNoDrv
+    ;
 }
