@@ -4,10 +4,9 @@
   See https://flake.parts,
 */
 
-{
-  lib,
-  flake-parts-lib,
-  ...
+{ lib
+, flake-parts-lib
+, ...
 }:
 let
   inherit (lib)
@@ -18,11 +17,10 @@ in
 {
   options = {
     perSystem = flake-parts-lib.mkPerSystemOption (
-      {
-        config,
-        options,
-        pkgs,
-        ...
+      { config
+      , options
+      , pkgs
+      , ...
       }:
       let
         clib = import ../lib { inherit lib; };
@@ -84,10 +82,12 @@ in
 
         # Set defaults
         config = {
-          mcpix.settings.targets = lib.mapAttrs (name: settingsPath: {
-            mcpSettingsLocation = lib.mkDefault settingsPath;
-            rulesLocation = lib.mkDefault defaultRulesLocations.${name};
-          }) defaultSettingsLocations;
+          mcpix.settings.targets = lib.mapAttrs
+            (name: settingsPath: {
+              mcpSettingsLocation = lib.mkDefault settingsPath;
+              rulesLocation = lib.mkDefault defaultRulesLocations.${name};
+            })
+            defaultSettingsLocations;
         };
       }
     );
