@@ -14,7 +14,7 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
-    programs.claude-code.mcpServers = clib.convert.geminiToClaudeCode (
+    programs.claude-code.mcpServers = (clib.convert.geminiToClaudeCode (
       clib.merge.mkMergedServerConfig {
         inherit
           globalCfg
@@ -23,7 +23,7 @@ in
           mcp-servers-nix
           ;
       }
-    );
+    )).mcpServers; # HM module already includes that
 
     home.file.".claude/${contextFile}" = lib.mkIf (makeContextFile) {
       text = clib.merge.mkMergedRules {
