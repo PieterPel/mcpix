@@ -8,14 +8,14 @@ in
 
     targets = lib.mkOption {
       type = lib.types.submodule {
-        options = clib.homeManagerTargetOptions;
+        options = clib.types.homeManagerTargetOptions;
       };
       default = { };
       description = "Configuration per target";
     };
 
-    rules = clib.rules;
+    rules = clib.types.rules;
 
-    servers = clib.servers;
+    servers = clib.types.servers;
   };
 }
