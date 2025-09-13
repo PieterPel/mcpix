@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, mcp-servers-nix
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  mcp-servers-nix,
+  ...
 }:
 let
   clib = import ../../lib { inherit lib; };
@@ -21,13 +22,11 @@ in
           pkgs
           mcp-servers-nix
           ;
-      };
-    };
-
-    # WARNING: This isn't supported yet it seems (https://docs.cursor.com/en/context/rules)
-    ".cursor/${contextFile}" = lib.mkIf (makeContextFile) {
-      text = clib.merge.mkMergedRules {
-        inherit globalCfg cfg;
+      }; # WARNING: This isn't supported yet it seems (https://docs.cursor.com/en/context/rules)
+      ".cursor/${contextFile}" = lib.mkIf (makeContextFile) {
+        text = clib.merge.mkMergedRules {
+          inherit globalCfg cfg;
+        };
       };
     };
   };
