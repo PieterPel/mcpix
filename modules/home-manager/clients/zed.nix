@@ -25,12 +25,10 @@ in
             ;
         }
       );
-
-      # WARNING: zed has no support for global rules it seems
-      xdg.configFile.".zed/${contextFile}" = lib.mkIf (makeContextFile) {
-        text = clib.merge.mkMergedRules {
-          inherit globalCfg cfg;
-        };
+    }; # WARNING: zed has no support for global rules it seems
+    xdg.configFile.".zed/${contextFile}" = lib.mkIf (makeContextFile) {
+      text = clib.merge.mkMergedRules {
+        inherit globalCfg cfg;
       };
     };
   };
