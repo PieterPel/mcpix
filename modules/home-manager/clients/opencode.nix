@@ -5,7 +5,7 @@
 , ...
 }:
 let
-  clib = import ../lib { inherit lib; };
+  clib = import ../../lib { inherit lib; };
   globalCfg = config.programs.mcpix;
   cfg = config.programs.mcpix.targets.opencode;
 in
