@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, mcp-servers-nix
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  mcp-servers-nix,
+  ...
 }:
 let
   clib = import ../../lib { inherit lib; };
@@ -13,7 +14,7 @@ let
 in
 {
   config = lib.mkIf (cfg.enable && globalCfg.enable) {
-    programs.claude-code.settings = clib.convert.geminiToClaudeCode (
+    programs.claude-code.mcpServers = clib.convert.geminiToClaudeCode (
       clib.merge.mkMergedServerConfig {
         inherit
           globalCfg
